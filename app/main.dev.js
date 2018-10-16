@@ -15,6 +15,8 @@ import MenuBuilder from './menu';
 
 let mainWindow = null;
 
+console.log("Saving Preference Data to: " + app.getPath('userData'));
+
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();

@@ -1,15 +1,21 @@
 // @flow
 import * as React from 'react';
 import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
-import { compose } from 'redux';
+import { compose, bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import routes from '../constants/routes';
+import {connect} from 'react-redux';
+import type {Dispatch} from 'redux';
+
+// Actions
+import {actions as startupConfigLoaderActions} from '../reducers/startupConfigLoader';
 
 type Props = {
   children: React.Node;
   history: Object;
   location: Object;
   match: Object;
+  loadConfig: () => void;  
 };
 
 type State = {
@@ -20,6 +26,10 @@ class App extends React.Component<Props, State> {
   props: Props;
   state = {
     expanded:false
+  }
+
+  componentDidMount(){    
+    this.props.loadConfig();
   }
 
   onSelect = (selected: string) => {   
@@ -81,4 +91,13 @@ class App extends React.Component<Props, State> {
   }
 }
 
-export default withRouter(App);
+function mapDispatchToProps(dispatch: Dispatch<any>){
+  return bindActionCreators({
+    loadConfig:startupConfigLoaderActions.loadConfig
+  }, dispatch)
+}
+
+export default compose(
+  withRouter,
+  connect(null, mapDispatchToProps)
+)(App);

@@ -6,8 +6,7 @@ type Props = {};
 export default class AboutPage extends Component<Props> {
   props: Props;
 
-  render() {
-      console.log("I AM HERE")
+  render() {      
     return (
         <div>
             <h2> About Solr Probe </h2>
