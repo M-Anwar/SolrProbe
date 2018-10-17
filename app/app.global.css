@@ -11,5 +11,25 @@ body {
   height: 100vh;
   background-color: rgb(255, 255, 255);
   font-family: Arial, Helvetica, Helvetica Neue, serif;
-  overflow-y: scroll;
+  overflow-y: auto;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #7c7c7c; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #db3d44; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
