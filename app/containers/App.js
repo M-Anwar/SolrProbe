@@ -54,7 +54,7 @@ class App extends React.Component<Props, State> {
             {children} 
           </div>
           <div>
-            <SideNav onSelect={this.onSelect} onToggle={this.onToggle}>
+            <SideNav onSelect={this.onSelect} onToggle={this.onToggle} style={{position:'fixed'}}>
               <SideNav.Toggle/>
               <SideNav.Nav selected={this.props.location.pathname}>     
                 <NavItem eventKey={routes.HOME}>
