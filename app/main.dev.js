@@ -48,10 +48,10 @@ const installExtensions = async () => {
 
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
-  // after all windows have been closed
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+  // after all windows have been closed. There is an issue with this
+  // where the window can't be re-opened after. So breaking convention here 
+  // and quitting the application.
+  app.quit();  
 });
 
 app.on('ready', async () => {

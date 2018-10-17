@@ -2,15 +2,15 @@
  * @NOTE: Prepend a `~` to css file paths that are in your node_modules
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
-@import "~@fortawesome/fontawesome-free/css/all.css";
-@import "~semantic-ui-css/semantic.min.css";
-@import "~@trendmicro/react-sidenav/dist/react-sidenav.css";
+@import '~@fortawesome/fontawesome-free/css/all.css';
+@import '~semantic-ui-css/semantic.min.css';
+@import '~@trendmicro/react-sidenav/dist/react-sidenav.css';
 
 body {
   position: relative;
   color: white;
   height: 100vh;
-  background-color: #232c39;  
+  background-color: #fff;
   font-family: Arial, Helvetica, Helvetica Neue, serif;
   overflow-y: hidden;
 }
