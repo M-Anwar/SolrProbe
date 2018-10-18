@@ -9,9 +9,7 @@ import SolrSelectModal from '../components/SolrSelectModal';
 // Actions
 import {actions as testActions} from '../reducers/test';
 
-type Props = { 
-  configPath:string,
-  settings:Object,
+type Props = {  
   testAction: (string) => void
 };
 
@@ -75,13 +73,10 @@ class HomePage extends Component<Props> {
   }
 }
 
-function mapStateToProps(state){
-  return {configPath: state.config.configPath, settings: state.config.settings}
-}
 function mapDispatchToProps(dispatch: Dispatch<any>){
   return bindActionCreators({
     ...testActions
   }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(null, mapDispatchToProps)(HomePage);

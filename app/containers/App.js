@@ -8,14 +8,14 @@ import {connect} from 'react-redux';
 import type {Dispatch} from 'redux';
 
 // Actions
-import {actions as startupConfigLoaderActions} from '../reducers/startupConfigLoader';
+import {actions as solrInstanceActions} from '../reducers/solrInstancesReducer';
 
 type Props = {
   children: React.Node;
   history: Object;
   location: Object;
   match: Object;
-  loadConfig: () => void;  
+  loadInstances: () => void;  
 };
 
 type State = {
@@ -29,7 +29,7 @@ class App extends React.Component<Props, State> {
   }
 
   componentDidMount(){    
-    this.props.loadConfig();
+    this.props.loadInstances();
   }
 
   onSelect = (selected: string) => {   
@@ -93,7 +93,7 @@ class App extends React.Component<Props, State> {
 
 function mapDispatchToProps(dispatch: Dispatch<any>){
   return bindActionCreators({
-    loadConfig:startupConfigLoaderActions.loadConfig
+    loadInstances:solrInstanceActions.loadInstances
   }, dispatch)
 }
 

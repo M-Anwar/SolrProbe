@@ -6,12 +6,12 @@
 
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
-import startupConfigLoaderReducer from './startupConfigLoader'
+import solrInstancesReducer from './solrInstancesReducer'
 
 export default function createRootReducer(history: {}) {
   const routerReducer = connectRouter(history)(() => {});
 
   return connectRouter(history)(
-    combineReducers({ router: routerReducer, config:startupConfigLoaderReducer })
+    combineReducers({ router: routerReducer, solrInstances:solrInstancesReducer })
   );
 }

@@ -1,33 +1,41 @@
 // @flow
 import React, { Component } from 'react';
-import { Button, Header, Icon, Modal, Dropdown, Grid, Table, Checkbox } from 'semantic-ui-react'
+import { Input, Button, Header, Icon, Modal, Dropdown, Grid, Table, Checkbox } from 'semantic-ui-react'
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 import type {Dispatch} from 'redux';
+import { LocalStore } from '../localStore'; 
 
 // Actions
-import {actions as startupConfigLoaderActions} from '../reducers/startupConfigLoader';
+import {actions as solrInstanceActions} from '../reducers/solrInstancesReducer';
 
 type Props = {
-    configPath: string,
-    settings: Object,
-    updateConfig: (key:string, value:Object) => void;
+    instances: Object,
+    writeInstances: (allInstances:Object) => void;
 };
 
-class SolrSelectModal extends Component<Props> {
+type State = {
+    invalid: boolean
+}
+
+class SolrSelectModal extends Component<Props, State> {
   props: Props;
+  state: State;
   getSolrUrlOptions: () => Array<Object>;
-  getSolrInstanceTable: () => Any;
+  getSolrInstanceTable: () => any;
+  onAddInstance:() => void;
   
   constructor(props: Props){
       super(props);
+      this.state = { invalid: true}
       this.getSolrUrlOptions = this.getSolrUrlOptions.bind(this);
       this.getSolrInstanceTable = this.getSolrInstanceTable.bind(this);
+      this.onAddInstance = this.onAddInstance.bind(this);
   }
 
   getSolrUrlOptions():Array<Object> {   
-    if(!this.props.settings.solrPaths){return []}
-    return Object.entries(this.props.settings.solrPaths).map(
+    if(!this.props.instances){return []}
+    return Object.entries(this.props.instances).map(
         ([key,val]) => {
             return {
                 key: key,
@@ -39,27 +47,31 @@ class SolrSelectModal extends Component<Props> {
     )
   }
 
-  getSolrInstanceTable(){
-    if(!this.props.settings.solrPaths){return []}
-    return Object.entries(this.props.settings.solrPaths).map(
+  getSolrInstanceTable():any{
+    if(!this.props.instances){return []}
+    return Object.entries(this.props.instances).map(
         ([key,val]) => {
             return (
                 <Table.Row key={key}>  
                     <Table.Cell collapsing>
                         <Button size='mini' icon='trash' negative/>
                     </Table.Cell>                          
-                    <Table.Cell>{key}</Table.Cell>
-                    <Table.Cell>{val}</Table.Cell>                            
+                    <Table.Cell><Input fluid defaultValue={key}/></Table.Cell>
+                    <Table.Cell><Input fluid defaultValue={val}/></Table.Cell>                            
                 </Table.Row>
             )
         }
     )
   }
 
+  onAddInstance(){
+    console.log("add clicked")
+  }
+
   render() {   
+    const { invalid } = this.state
     return (
-        <div>   
-            
+        <div>               
             <Dropdown  
             floating                               
                 placeholder='Select Solr URL'
@@ -92,7 +104,7 @@ class SolrSelectModal extends Component<Props> {
                         <Table.Row>
                             <Table.HeaderCell />
                             <Table.HeaderCell colSpan='4'>
-                                <Button floated='right' icon labelPosition='left' primary size='small'>
+                                <Button floated='right' icon labelPosition='left' primary size='small' onClick={this.onAddInstance}>
                                     <Icon name='searchengin' /> Add Instance
                                 </Button>                            
                             </Table.HeaderCell>
@@ -100,13 +112,13 @@ class SolrSelectModal extends Component<Props> {
                         </Table.Footer>
                     </Table>
 
-                    Settings are saved to: <span> {this.props.configPath} </span>
+                    Settings are saved to: <span> {LocalStore.path} </span>
                 </Modal.Content>
                 <Modal.Actions>                   
                     <Button color='red'>
                         <Icon name='remove' /> Cancel
                     </Button>
-                    <Button color='green'>
+                    <Button color='green' disabled={invalid}>
                         <Icon name='checkmark' /> Apply
                     </Button>
                 </Modal.Actions>
@@ -120,12 +132,12 @@ class SolrSelectModal extends Component<Props> {
   }
 }
 function mapStateToProps(state){
-    return {configPath: state.config.configPath, settings: state.config.settings}
+    return {instances: state.solrInstances.instances}
   }
 
 function mapDispatchToProps(dispatch: Dispatch<any>){
     return bindActionCreators({
-      updateConfig:startupConfigLoaderActions.updateConfig
+      writeInstances:solrInstanceActions.writeInstances
     }, dispatch)
   }
   
