@@ -12,7 +12,7 @@ const router = routerMiddleware(history);
 const sagaMiddleware = createSagaMiddleware();
 const enhancer = applyMiddleware(sagaMiddleware, router);
 
-function configureStore(initialState) {
+function configureStore(initialState:any) {
   return createStore(rootReducer, initialState, enhancer);
 }
 

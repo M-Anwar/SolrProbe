@@ -23,7 +23,7 @@ class HomePage extends Component<Props> {
   }
 
   onClick(){   
-    this.props.testAction(this.props.configPath)
+    this.props.testAction("Hello World")
   }
 
   render() {        
